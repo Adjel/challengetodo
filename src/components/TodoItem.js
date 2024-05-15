@@ -3,8 +3,7 @@
 import { TodoContext } from "@/provider/TodoProvider";
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 export default function TodoItem({ id, title, isCompletedProp }) {
   const [todo, setTodo] = useState({

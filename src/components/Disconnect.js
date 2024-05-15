@@ -1,7 +1,7 @@
 import { UserContext } from "@/provider/UserProvider";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Disconnect() {
@@ -17,7 +17,6 @@ export default function Disconnect() {
   return (
     <>
       <button onClick={() => handleDisconnect(notify)}>disconnect</button>
-      <ToastContainer />
     </>
   );
 }

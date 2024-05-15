@@ -2,7 +2,7 @@ import Disconnect from "@/components/Disconnect";
 import TodoItem from "@/components/TodoItem";
 import { TodoContext } from "@/provider/TodoProvider";
 import { useContext, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function TodoList() {
@@ -61,7 +61,7 @@ export default function TodoList() {
           Create
         </button>
       </form>
-      <ToastContainer />
+
       <Disconnect />
     </>
   );

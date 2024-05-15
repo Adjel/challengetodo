@@ -3,7 +3,7 @@ import Link from "next/link";
 import { UserContext } from "@/provider/UserProvider";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
@@ -69,7 +69,6 @@ export default function Login() {
         </button>
       </form>
       <Link href="Register/">Not an account ? Sign up in here</Link>
-      <ToastContainer />
     </>
   );
 }
