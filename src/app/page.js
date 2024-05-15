@@ -1,11 +1,9 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import Providers from "@/provider/Poviders";
+import Login from "@/pages/Login";
 
 export default function Home() {
   return (
-    <Providers>
+    <>
       <Login />
-    </Providers>
+    </>
   );
 }
