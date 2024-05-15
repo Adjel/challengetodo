@@ -1,7 +1,9 @@
 import Disconnect from "@/components/Disconnect";
 import TodoItem from "@/components/TodoItem";
 import { TodoContext } from "@/provider/TodoProvider";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TodoList() {
   const [todo, setTodo] = useState({
@@ -10,6 +12,8 @@ export default function TodoList() {
   });
 
   const { todos, handleTodoInput } = useContext(TodoContext);
+
+  const notify = (message) => toast(`${message}`);
 
   function handleTodo(event) {
     const { name, value, checked } = event.target;
@@ -21,6 +25,9 @@ export default function TodoList() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    if (todo.title === "") return notify("todo can't be empty ");
+    if (todos.find((item) => item.title === todo.title))
+      return notify("this todo already exist");
     handleTodoInput(todo);
   }
 
@@ -50,6 +57,7 @@ export default function TodoList() {
           Create
         </button>
       </form>
+      <ToastContainer />
       <Disconnect />
     </>
   );
