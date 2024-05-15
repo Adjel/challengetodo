@@ -1,5 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { addDoc, collection, db, onSnapshot } from "../Firebase";
+import {
+  addDoc,
+  collection,
+  db,
+  onSnapshot,
+  deleteDoc,
+  doc,
+} from "../Firebase";
 import { UserContext } from "./UserProvider";
 
 export const TodoContext = createContext();
@@ -21,7 +28,6 @@ export default function TodoProvider({ children }) {
           });
         });
         setTodos(allTodos);
-        console.log("todos loeaded");
       });
 
       return () => {
@@ -40,8 +46,17 @@ export default function TodoProvider({ children }) {
     console.log({ docRef });
   }
 
+  async function handleDelete(todoId, notify) {
+    try {
+      const ref = doc(db, "users", user.uid, "todos", todoId);
+      await deleteDoc(ref);
+    } catch (e) {
+      notify(e);
+    }
+  }
+
   return (
-    <TodoContext.Provider value={{ todos, handleTodoInput }}>
+    <TodoContext.Provider value={{ todos, handleTodoInput, handleDelete }}>
       {children}
     </TodoContext.Provider>
   );
