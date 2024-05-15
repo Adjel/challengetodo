@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   auth,
@@ -7,7 +7,7 @@ import {
 
 export const UserContext = createContext();
 
-export default function UserProvider({ children }, notify) {
+export default function UserProvider({ children }) {
   const [user, setUser] = useState();
 
   async function handleRegsiter({ email, password }, notify) {
