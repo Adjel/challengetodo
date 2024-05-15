@@ -33,8 +33,8 @@ export default function TodoList() {
 
   return (
     <>
-      {todos.map(({ id, title, isCompleted }) => (
-        <TodoItem id={id} title={title} isCompleted={isCompleted} />
+      {todos.map(({ id, title, completed }) => (
+        <TodoItem id={id} title={title} isCompletedProp={completed} />
       ))}
       <form>
         <label htmlFor="title">Title:</label>

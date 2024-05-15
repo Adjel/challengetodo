@@ -6,6 +6,7 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
+  updateDoc,
 } from "../Firebase";
 import { UserContext } from "./UserProvider";
 
@@ -55,8 +56,24 @@ export default function TodoProvider({ children }) {
     }
   }
 
+  async function handleUpdate({ title, isCompleted, id }) {
+    const ref = doc(db, "users", user.uid, "todos", id);
+    await updateDoc(ref, {
+      title: title,
+      completed: isCompleted,
+    });
+    console.log({ title }), console.log({ isCompleted });
+  }
+
   return (
-    <TodoContext.Provider value={{ todos, handleTodoInput, handleDelete }}>
+    <TodoContext.Provider
+      value={{
+        todos,
+        handleTodoInput,
+        handleDelete,
+        handleUpdate,
+      }}
+    >
       {children}
     </TodoContext.Provider>
   );
