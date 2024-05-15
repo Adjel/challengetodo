@@ -1,13 +1,17 @@
-import { createContext, useState } from "react";
-import { createUserWithEmailAndPassword, auth } from "../Firebase";
+import { createContext, useEffect, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  auth,
+  signInWithEmailAndPassword,
+} from "../Firebase";
 
 export const UserContext = createContext();
 
-export default function UserProvider({ children }, notify) {
+export default function UserProvider({ children }) {
   const [user, setUser] = useState();
 
   async function handleRegsiter({ email, password }, notify) {
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
         setUser(userCredential.user);
@@ -24,11 +28,29 @@ export default function UserProvider({ children }, notify) {
           );
         if (error.code === "auth/email-already-in-use")
           return notify("This account already exist");
+        notify("error.message");
+      });
+  }
+
+  async function handleLogIn({ email, password }, notify) {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        setUser(userCredential.user);
+      })
+      .catch((error) => {
+        if (error.code === "auth/invalid-email")
+          return notify("You need an email to register");
+        if (error.code === "auth/missing-password")
+          return notify("You need a password to register");
+        if (error.code === "auth/invalid-credential")
+          return notify("Invalid email or password");
+        notify("error.message");
       });
   }
 
   return (
-    <UserContext.Provider value={{ user, handleRegsiter }}>
+    <UserContext.Provider value={{ user, handleRegsiter, handleLogIn }}>
       {children}
     </UserContext.Provider>
   );

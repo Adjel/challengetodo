@@ -30,9 +30,10 @@ export default function Register() {
     });
   }
 
-  function handleOnSubmit(event) {
+  async function handleOnSubmit(event) {
     event.preventDefault();
-    handleRegsiter(userAccount, notify);
+    // TODO: Pass handleRegister to the bottom to this function
+    await handleRegsiter(userAccount, notify);
     if (userAccount.email === "") return notify("You need an email");
     if (userAccount.password === "") return notify("You need a password");
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
