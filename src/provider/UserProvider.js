@@ -3,12 +3,19 @@ import {
   createUserWithEmailAndPassword,
   auth,
   signInWithEmailAndPassword,
+  signOut,
 } from "../Firebase";
 
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState();
+  const [isDeconnected, setIsDeconnected] = useState(false);
+
+  function handleUserDisconnected(user) {
+    setUser(user);
+    setIsDeconnected(!user ? true : false);
+  }
 
   async function handleRegsiter({ email, password }, notify) {
     await createUserWithEmailAndPassword(auth, email, password)
@@ -49,8 +56,29 @@ export default function UserProvider({ children }) {
       });
   }
 
+  function handleDisconnect(notify) {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        handleUserDisconnected();
+        console.log("user disco");
+      })
+      .catch((error) => {
+        // An error happened.
+        notify(error);
+      });
+  }
+
   return (
-    <UserContext.Provider value={{ user, handleRegsiter, handleLogIn }}>
+    <UserContext.Provider
+      value={{
+        user,
+        isDeconnected,
+        handleRegsiter,
+        handleLogIn,
+        handleDisconnect,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

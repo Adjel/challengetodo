@@ -1,3 +1,5 @@
+import Disconnect from "@/components/Disconnect";
+
 export default function TodoList() {
-  return <>todolist</>;
+  return <Disconnect />;
 }
