@@ -12,7 +12,7 @@ export default function Login() {
     password: "",
   });
 
-  const { user, handleLogIn } = useContext(UserContext);
+  const { isDeconnected, user, handleLogIn } = useContext(UserContext);
 
   const router = useRouter();
 
@@ -21,6 +21,13 @@ export default function Login() {
   useEffect(() => {
     if (user) router.push("/TodoList");
   }, [user]);
+
+  useEffect(() => {
+    if (isDeconnected) {
+      notify("You're disconnected");
+      console.log("notif in page");
+    }
+  }, [isDeconnected]);
 
   function handleOnChange(event) {
     const { value, name } = event.target;

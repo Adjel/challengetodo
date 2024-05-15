@@ -1,6 +1,7 @@
+"use client";
 import Login from "@/pages/Login";
-import Register from "@/pages/Register";
 import Providers from "@/provider/Poviders";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   return (
