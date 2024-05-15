@@ -43,8 +43,7 @@ export default function TodoProvider({ children }) {
       title: title,
       completed: isCompleted,
     });
-    console.log({ user });
-    console.log({ docRef });
+    return docRef;
   }
 
   async function handleDelete(todoId, notify) {

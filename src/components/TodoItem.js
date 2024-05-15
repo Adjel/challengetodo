@@ -86,7 +86,6 @@ export default function TodoItem({ id, title, isCompletedProp }) {
         ></input>
         <button onClick={() => handleOnClickDelete()}>Delete</button>
       </ItemWrapper>
-      <ToastContainer />
     </Wrapper>
   );
 }

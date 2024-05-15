@@ -23,12 +23,16 @@ export default function TodoList() {
     });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (todo.title === "") return notify("todo can't be empty ");
     if (todos.find((item) => item.title === todo.title))
       return notify("this todo already exist");
-    handleTodoInput(todo);
+    if (await handleTodoInput(todo))
+      setTodo({
+        title: "",
+        isCompleted: false,
+      });
   }
 
   return (
