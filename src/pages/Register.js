@@ -1,6 +1,7 @@
 "use client";
 import { UserContext } from "@/provider/UserProvider";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 export default function Register() {
@@ -10,6 +11,12 @@ export default function Register() {
   });
 
   const { user, handleRegsiter } = useContext(UserContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) router.push("/TodoList");
+  }, [user]);
 
   function handleOnChange(event) {
     const { value, name } = event.target;
