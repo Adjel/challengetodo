@@ -3,6 +3,8 @@ import { UserContext } from "@/provider/UserProvider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const [userAccount, setUserAccount] = useState({
@@ -13,6 +15,8 @@ export default function Register() {
   const { user, handleRegsiter } = useContext(UserContext);
 
   const router = useRouter();
+
+  const notify = (message) => toast(`${message}`);
 
   useEffect(() => {
     if (user) router.push("/TodoList");
@@ -28,7 +32,17 @@ export default function Register() {
 
   function handleOnSubmit(event) {
     event.preventDefault();
-    handleRegsiter(userAccount);
+    handleRegsiter(userAccount, notify);
+    if (userAccount.email === "") return notify("You need an email");
+    if (userAccount.password === "") return notify("You need a password");
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+    if (!emailRegex.test(userAccount.email)) return notify("invalid email");
+    if (!passwordRegex.test(userAccount.password))
+      return notify(
+        "Your password need at least one Uppercase, one undercase, one special chart and one number, and at least 8 chars in total"
+      );
   }
 
   return (
@@ -55,6 +69,7 @@ export default function Register() {
         </button>
       </form>
       <Link href="Login/">Already an account ? Log in here</Link>;
+      <ToastContainer />
     </>
   );
 }
